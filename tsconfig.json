@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "dist",
+    "lib": ["dom", "es2015"],
+    "strict": true,
+    "noImplicitAny": true,
+    "jsx": "react",
+    "jsxFactory": "Reio.createElement",
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+  },
+  "include": ["src"],
+}
