@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "moduleResolution": "node",
     "module": "commonjs",
+    "esModuleInterop": true,
     "outDir": "dist",
     "lib": ["dom", "es2015"],
     "strict": true,
@@ -10,6 +12,8 @@
     "jsxFactory": "Reio.createElement",
     "allowSyntheticDefaultImports": true,
     "declaration": true,
+    "typeRoots": ["./src/definitions.d.ts", "node_modules/@types"]
   },
-  "include": ["src"],
+  "exclude": ["__tests__"],
+  "include": ["src", "__tests__"]
 }

@@ -5,7 +5,7 @@ const {Route} = Router;
 const App = () => (
   <Server port={8080}>
     <Router>
-      <Route method="get" path="/" />
+      <Route path="/" method="get" response="Hello world" />
     </Router>
   </Server>
 );

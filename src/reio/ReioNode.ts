@@ -1,4 +1,4 @@
-import * as invariant from 'invariant';
+import invariant from 'invariant';
 import {JSX, Reio} from './types';
 
 export function registerNode<Props = void, Entity = void>(
@@ -11,18 +11,26 @@ export function registerNode<Props = void, Entity = void>(
     const {component, props, children} = element;
 
     const instance = new component(props, children);
-    if (process.env.NODE_ENV === 'development' && parent) {
-      hasLowerPriority(parent, instance);
+    if (global.__DEV__) {
+      if (parent) {
+        hasLowerPriority(parent, instance);
+      }
     }
 
     instance.componentWillMount();
 
-    if (Array.isArray(children)) {
-      children.forEach(child => {
-        if (child) {
-          registerNode(child, instance);
-        }
-      });
+    const instanceChildren = instance.present();
+
+    if (instanceChildren) {
+      if (Array.isArray(instanceChildren)) {
+        instanceChildren.forEach(child => {
+          if (child) {
+            registerNode(child, instance);
+          }
+        });
+      } else {
+        registerNode(instanceChildren, instance);
+      }
     }
 
     instance.componentDidMount();
@@ -35,6 +43,10 @@ function hasLowerPriority(
 ) {
   invariant(
     pParent < pChild,
-    `Parent component (${dnParent} = ${pParent}) should have lower priority than child component (${dnChild} = ${pChild})!`,
+    `Parent component (%s = %s) should have lower priority than child component (%s = %s)!`,
+    dnParent,
+    pParent,
+    dnChild,
+    pChild,
   );
 }

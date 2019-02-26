@@ -1,7 +1,7 @@
 export namespace JSX {
-  export type Child = Element<void, void> | null;
-  // TODO: children as function
-  export type Children = Child[] | null;
+  export type ChildElement = Element<void, void>;
+  export type ChildFunction = (...args: any[]) => Element<void, void>;
+  export type Children = ChildElement[] | ChildElement | ChildFunction | null;
 
   export type Element<Props, Entity> = {
     component: Component<Props, Entity>;
@@ -20,11 +20,12 @@ export namespace Reio {
 
     displayName: string;
     priority: Priority;
+    entity: Entity;
 
     componentWillMount(): void; // exec before children
     componentDidMount(): void; // exec after children
 
-    entity(): Entity;
+    present(): JSX.Children;
   };
 }
 
